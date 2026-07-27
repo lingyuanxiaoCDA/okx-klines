@@ -1,9 +1,9 @@
 name: Fetch OKX K-line Data
 
 on:
-  # 手动触发
+  # Manual trigger
   workflow_dispatch:
-  # 每6小时自动运行一次
+  # Auto-run every 6 hours
   schedule:
     - cron: '0 */6 * * *'
 
@@ -35,7 +35,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "🔄 Auto-update K-line data $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git commit -m "Auto-update K-line data $(date -u '+%Y-%m-%d %H:%M UTC')"
             git push
           fi
       

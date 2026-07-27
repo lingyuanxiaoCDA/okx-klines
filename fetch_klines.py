@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-OKX K线数据抓取脚本 - GitHub Actions 版本
-从 OKX 公共 API 获取多币种多周期 K 线数据，保存为 JSON 文件。
+OKX K-line data fetcher - GitHub Actions version
+Fetches multi-symbol multi-period K-line data from OKX public API, saves as JSON.
 """
 
 import json
@@ -11,28 +11,28 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-# OKX 公共 API
+# OKX public API
 OKX_API = "https://www.okx.com/api/v5/market/candles"
 
-# 币种列表
+# Symbol list
 SYMBOLS = ["BTC-USDT-SWAP", "ETH-USDT-SWAP", "SOL-USDT-SWAP", "DOGE-USDT-SWAP", "LINK-USDT-SWAP"]
 
-# 周期映射: (OKX bar参数, 文件名标识, 最大K线数)
+# Period mapping: (OKX bar param, file tag, max candles)
 PERIODS = [
-    ("1m",    "1m",    60000),   # ~41.7天
-    ("5m",    "5m",    60000),   # ~208天
-    ("15m",   "15m",   30000),   # ~312天
-    ("30m",   "30m",   30000),   # ~625天
-    ("1H",    "1H",    30000),   # ~1250天
-    ("4H",    "4H",    10000),   # ~1666天
-    ("1D",    "1D",    3000),    # ~8.2年
+    ("1m",    "1m",    60000),   # ~41.7 days
+    ("5m",    "5m",    60000),   # ~208 days
+    ("15m",   "15m",   30000),   # ~312 days
+    ("30m",   "30m",   30000),   # ~625 days
+    ("1H",    "1H",    30000),   # ~1250 days
+    ("4H",    "4H",    10000),   # ~1666 days
+    ("1D",    "1D",    3000),    # ~8.2 years
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
 def fetch_candles(symbol: str, bar: str, limit: int = 300) -> list:
-    """从 OKX 获取单次 K 线数据（最多300根）"""
+    """Fetch a single batch of K-line data from OKX (max 300 candles)."""
     url = f"{OKX_API}?instId={symbol}&bar={bar}&limit={limit}"
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -46,22 +46,22 @@ def fetch_candles(symbol: str, bar: str, limit: int = 300) -> list:
 
 
 def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
-    """分页获取大量 K 线数据"""
+    """Paginate to fetch large amounts of K-line data."""
     all_candles = []
     seen_ts = set()
-    
-    # 首次请求（从最新开始往前翻）
+
+    # First request (from latest going backwards)
     batch = fetch_candles(symbol, bar, 300)
     if not batch:
         return []
-    
+
     for candle in batch:
         ts = candle[0]
         if ts not in seen_ts:
             seen_ts.add(ts)
             all_candles.append(candle)
-    
-    # 用最早的K线时间戳作为 before 参数继续往前翻
+
+    # Use oldest K-line timestamp as 'before' parameter to continue backwards
     while len(all_candles) < max_count:
         oldest_ts = min(c[0] for c in batch)
         url = f"{OKX_API}?instId={symbol}&bar={bar}&limit=300&before={oldest_ts}"
@@ -73,19 +73,19 @@ def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
         except urllib.error.URLError as e:
-            print(f"  ⚠️ 网络错误: {e}, 等待3秒后重试...")
+            print(f"  Warning: network error: {e}, retrying in 3s...")
             time.sleep(3)
             continue
-        
+
         if data.get("code") != "0":
-            print(f"  ⚠️ API错误: {data.get('msg')}, 等待3秒后重试...")
+            print(f"  Warning: API error: {data.get('msg')}, retrying in 3s...")
             time.sleep(3)
             continue
-        
+
         batch = data.get("data", [])
         if not batch:
-            break  # 没有更多数据了
-        
+            break  # No more data
+
         new_count = 0
         for candle in batch:
             ts = candle[0]
@@ -93,26 +93,26 @@ def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
                 seen_ts.add(ts)
                 all_candles.append(candle)
                 new_count += 1
-        
+
         if new_count == 0:
-            break  # 没有新数据了
-        
-        print(f"  已获取 {len(all_candles)}/{max_count} 根 ({symbol} {bar})")
-        time.sleep(0.2)  # 避免触发频率限制
-    
-    # 按时间戳升序排列
+            break  # No new data
+
+        print(f"  Fetched {len(all_candles)}/{max_count} candles ({symbol} {bar})")
+        time.sleep(0.2)  # Avoid rate limits
+
+    # Sort by timestamp ascending
     all_candles.sort(key=lambda x: x[0])
     return all_candles[:max_count]
 
 
 def save_candles(symbol: str, period_tag: str, candles: list):
-    """保存 K 线数据为 JSON 文件"""
+    """Save K-line data as JSON file."""
     coin = symbol.split("-")[0].lower()
     filename = f"data_{coin}_{period_tag}.json"
     filepath = os.path.join(OUTPUT_DIR, filename)
-    
-    # OKX K线格式: [ts, open, high, low, close, vol, volCcy, volCcyQuote, confirm]
-    # 转为简洁格式
+
+    # OKX K-line format: [ts, open, high, low, close, vol, volCcy, volCcyQuote, confirm]
+    # Convert to clean format
     formatted = []
     for c in candles:
         formatted.append({
@@ -126,7 +126,7 @@ def save_candles(symbol: str, period_tag: str, candles: list):
             "volCcy": float(c[6]),
             "confirm": c[8] if len(c) > 8 else "1",
         })
-    
+
     output = {
         "symbol": symbol,
         "period": period_tag,
@@ -134,46 +134,46 @@ def save_candles(symbol: str, period_tag: str, candles: list):
         "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
         "data": formatted,
     }
-    
+
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, separators=(",", ":"))
-    
+
     return filename, len(formatted)
 
 
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    
+
     results = []
     for symbol in SYMBOLS:
         for bar, tag, max_count in PERIODS:
-            print(f"\n📊 获取 {symbol} {tag} (目标: {max_count} 根)...")
+            print(f"\nFetching {symbol} {tag} (target: {max_count} candles)...")
             try:
                 candles = fetch_all_candles(symbol, bar, max_count)
                 if candles:
                     filename, count = save_candles(symbol, tag, candles)
-                    print(f"  ✅ {filename}: {count} 根 K线")
+                    print(f"  OK: {filename}: {count} candles")
                     results.append((filename, count, "OK"))
                 else:
-                    print(f"  ❌ 无数据")
+                    print(f"  FAIL: no data")
                     results.append((f"data_{symbol.split('-')[0].lower()}_{tag}.json", 0, "NO_DATA"))
             except Exception as e:
-                print(f"  ❌ 错误: {e}")
+                print(f"  ERROR: {e}")
                 results.append((f"data_{symbol.split('-')[0].lower()}_{tag}.json", 0, f"ERROR: {e}"))
-    
-    # 打印汇总
+
+    # Print summary
     print("\n" + "=" * 60)
-    print("📈 数据获取汇总")
+    print("Data Fetch Summary")
     print("=" * 60)
     total_ok = 0
     for filename, count, status in results:
-        icon = "✅" if status == "OK" else "❌"
-        print(f"  {icon} {filename}: {count} 根 [{status}]")
+        icon = "OK" if status == "OK" else "FAIL"
+        print(f"  [{icon}] {filename}: {count} candles [{status}]")
         if status == "OK":
             total_ok += 1
-    print(f"\n总计: {total_ok}/{len(results)} 个文件成功")
-    
-    # 如果没有任何成功，返回非0退出码让 Actions 标记失败
+    print(f"\nTotal: {total_ok}/{len(results)} files succeeded")
+
+    # Exit with error if nothing succeeded
     if total_ok == 0:
         exit(1)
 
