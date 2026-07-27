@@ -1,0 +1,47 @@
+name: Fetch OKX K-line Data
+
+on:
+  # 手动触发
+  workflow_dispatch:
+  # 每6小时自动运行一次
+  schedule:
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Fetch K-line data from OKX
+        run: python fetch_klines.py
+      
+      - name: Commit and push data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🔄 Auto-update K-line data $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
+      
+      - name: Upload data artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: klines-data
+          path: data/
+          retention-days: 90
