@@ -1,356 +1,216 @@
 
-Fetching BTC-USDT-SWAP 1m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1m&limit=300&before=1785152639999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_btc_1m.json: 300 candles
+Fetching BTC-USDT-SWAP (BTCUSDT) 1m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching BTC-USDT-SWAP 5m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=5m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=5m&limit=300&before=1785080699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_btc_5m.json: 300 candles
+Fetching BTC-USDT-SWAP (BTCUSDT) 5m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching BTC-USDT-SWAP 15m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=15m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=15m&limit=300&before=1784900699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_btc_15m.json: 300 candles
+Fetching BTC-USDT-SWAP (BTCUSDT) 15m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching BTC-USDT-SWAP 30m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=30m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=30m&limit=300&before=1784631599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_btc_30m.json: 300 candles
+Fetching BTC-USDT-SWAP (BTCUSDT) 30m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching BTC-USDT-SWAP 1H (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1H&limit=300&before=1784091599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_btc_1H.json: 300 candles
+Fetching BTC-USDT-SWAP (BTCUSDT) 1H (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching BTC-USDT-SWAP 4H (target: 10000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=4H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=4H&limit=300&before=1780862399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_btc_4H.json: 300 candles
+Fetching BTC-USDT-SWAP (BTCUSDT) 4H (target: 10000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching BTC-USDT-SWAP 1D (target: 3000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1D&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1D&limit=300&before=1759334399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_btc_1D.json: 300 candles
+Fetching BTC-USDT-SWAP (BTCUSDT) 1D (target: 3000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching ETH-USDT-SWAP 1m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1m&limit=300&before=1785152639999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_eth_1m.json: 300 candles
+Fetching ETH-USDT-SWAP (ETHUSDT) 1m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching ETH-USDT-SWAP 5m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=5m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=5m&limit=300&before=1785080699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_eth_5m.json: 300 candles
+Fetching ETH-USDT-SWAP (ETHUSDT) 5m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching ETH-USDT-SWAP 15m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=15m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=15m&limit=300&before=1784900699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_eth_15m.json: 300 candles
+Fetching ETH-USDT-SWAP (ETHUSDT) 15m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching ETH-USDT-SWAP 30m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=30m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=30m&limit=300&before=1784631599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_eth_30m.json: 300 candles
+Fetching ETH-USDT-SWAP (ETHUSDT) 30m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching ETH-USDT-SWAP 1H (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1H&limit=300&before=1784091599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_eth_1H.json: 300 candles
+Fetching ETH-USDT-SWAP (ETHUSDT) 1H (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching ETH-USDT-SWAP 4H (target: 10000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=4H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=4H&limit=300&before=1780862399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_eth_4H.json: 300 candles
+Fetching ETH-USDT-SWAP (ETHUSDT) 4H (target: 10000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching ETH-USDT-SWAP 1D (target: 3000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1D&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1D&limit=300&before=1759334399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_eth_1D.json: 300 candles
+Fetching ETH-USDT-SWAP (ETHUSDT) 1D (target: 3000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching SOL-USDT-SWAP 1m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1m&limit=300&before=1785152639999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_sol_1m.json: 300 candles
+Fetching SOL-USDT-SWAP (SOLUSDT) 1m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching SOL-USDT-SWAP 5m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=5m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=5m&limit=300&before=1785080699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_sol_5m.json: 300 candles
+Fetching SOL-USDT-SWAP (SOLUSDT) 5m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching SOL-USDT-SWAP 15m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=15m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=15m&limit=300&before=1784900699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_sol_15m.json: 300 candles
+Fetching SOL-USDT-SWAP (SOLUSDT) 15m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching SOL-USDT-SWAP 30m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=30m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=30m&limit=300&before=1784631599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_sol_30m.json: 300 candles
+Fetching SOL-USDT-SWAP (SOLUSDT) 30m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching SOL-USDT-SWAP 1H (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1H&limit=300&before=1784091599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_sol_1H.json: 300 candles
+Fetching SOL-USDT-SWAP (SOLUSDT) 1H (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching SOL-USDT-SWAP 4H (target: 10000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=4H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=4H&limit=300&before=1780862399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_sol_4H.json: 300 candles
+Fetching SOL-USDT-SWAP (SOLUSDT) 4H (target: 10000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching SOL-USDT-SWAP 1D (target: 3000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1D&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1D&limit=300&before=1759334399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_sol_1D.json: 300 candles
+Fetching SOL-USDT-SWAP (SOLUSDT) 1D (target: 3000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching DOGE-USDT-SWAP 1m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1m&limit=300&before=1785152639999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_doge_1m.json: 300 candles
+Fetching DOGE-USDT-SWAP (DOGEUSDT) 1m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching DOGE-USDT-SWAP 5m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=5m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=5m&limit=300&before=1785080699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_doge_5m.json: 300 candles
+Fetching DOGE-USDT-SWAP (DOGEUSDT) 5m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching DOGE-USDT-SWAP 15m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=15m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=15m&limit=300&before=1784900699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_doge_15m.json: 300 candles
+Fetching DOGE-USDT-SWAP (DOGEUSDT) 15m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching DOGE-USDT-SWAP 30m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=30m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=30m&limit=300&before=1784631599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_doge_30m.json: 300 candles
+Fetching DOGE-USDT-SWAP (DOGEUSDT) 30m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching DOGE-USDT-SWAP 1H (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1H&limit=300&before=1784091599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_doge_1H.json: 300 candles
+Fetching DOGE-USDT-SWAP (DOGEUSDT) 1H (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching DOGE-USDT-SWAP 4H (target: 10000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=4H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=4H&limit=300&before=1780862399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_doge_4H.json: 300 candles
+Fetching DOGE-USDT-SWAP (DOGEUSDT) 4H (target: 10000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching DOGE-USDT-SWAP 1D (target: 3000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1D&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1D&limit=300&before=1759334399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_doge_1D.json: 300 candles
+Fetching DOGE-USDT-SWAP (DOGEUSDT) 1D (target: 3000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching LINK-USDT-SWAP 1m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1m&limit=300&before=1785152639999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_link_1m.json: 300 candles
+Fetching LINK-USDT-SWAP (LINKUSDT) 1m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching LINK-USDT-SWAP 5m (target: 60000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=5m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=5m&limit=300&before=1785080699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_link_5m.json: 300 candles
+Fetching LINK-USDT-SWAP (LINKUSDT) 5m (target: 60000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching LINK-USDT-SWAP 15m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=15m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=15m&limit=300&before=1784900699999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_link_15m.json: 300 candles
+Fetching LINK-USDT-SWAP (LINKUSDT) 15m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching LINK-USDT-SWAP 30m (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=30m&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=30m&limit=300&before=1784631599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_link_30m.json: 300 candles
+Fetching LINK-USDT-SWAP (LINKUSDT) 30m (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching LINK-USDT-SWAP 1H (target: 30000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1H&limit=300&before=1784091599999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_link_1H.json: 300 candles
+Fetching LINK-USDT-SWAP (LINKUSDT) 1H (target: 30000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching LINK-USDT-SWAP 4H (target: 10000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=4H&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=4H&limit=300&before=1780862399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_link_4H.json: 300 candles
+Fetching LINK-USDT-SWAP (LINKUSDT) 4H (target: 10000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
-Fetching LINK-USDT-SWAP 1D (target: 3000 candles)...
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1D&limit=300
-    DEBUG: got 300 candles, code=0
-  Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1D&limit=300&before=1759334399999
-    DEBUG: got 300 candles, code=0
-  No new data (all duplicates), stopping
-  OK: data_link_1D.json: 300 candles
+Fetching LINK-USDT-SWAP (LINKUSDT) 1D (target: 3000 klines)...
+  Warning: HTTP Error 451: , retrying in 3s...
+  Error: HTTP Error 451: , stopping
+  FAIL: no data
 
 ============================================================
 Data Fetch Summary
 ============================================================
-  [OK] data_btc_1m.json: 300 candles [OK]
-  [OK] data_btc_5m.json: 300 candles [OK]
-  [OK] data_btc_15m.json: 300 candles [OK]
-  [OK] data_btc_30m.json: 300 candles [OK]
-  [OK] data_btc_1H.json: 300 candles [OK]
-  [OK] data_btc_4H.json: 300 candles [OK]
-  [OK] data_btc_1D.json: 300 candles [OK]
-  [OK] data_eth_1m.json: 300 candles [OK]
-  [OK] data_eth_5m.json: 300 candles [OK]
-  [OK] data_eth_15m.json: 300 candles [OK]
-  [OK] data_eth_30m.json: 300 candles [OK]
-  [OK] data_eth_1H.json: 300 candles [OK]
-  [OK] data_eth_4H.json: 300 candles [OK]
-  [OK] data_eth_1D.json: 300 candles [OK]
-  [OK] data_sol_1m.json: 300 candles [OK]
-  [OK] data_sol_5m.json: 300 candles [OK]
-  [OK] data_sol_15m.json: 300 candles [OK]
-  [OK] data_sol_30m.json: 300 candles [OK]
-  [OK] data_sol_1H.json: 300 candles [OK]
-  [OK] data_sol_4H.json: 300 candles [OK]
-  [OK] data_sol_1D.json: 300 candles [OK]
-  [OK] data_doge_1m.json: 300 candles [OK]
-  [OK] data_doge_5m.json: 300 candles [OK]
-  [OK] data_doge_15m.json: 300 candles [OK]
-  [OK] data_doge_30m.json: 300 candles [OK]
-  [OK] data_doge_1H.json: 300 candles [OK]
-  [OK] data_doge_4H.json: 300 candles [OK]
-  [OK] data_doge_1D.json: 300 candles [OK]
-  [OK] data_link_1m.json: 300 candles [OK]
-  [OK] data_link_5m.json: 300 candles [OK]
-  [OK] data_link_15m.json: 300 candles [OK]
-  [OK] data_link_30m.json: 300 candles [OK]
-  [OK] data_link_1H.json: 300 candles [OK]
-  [OK] data_link_4H.json: 300 candles [OK]
-  [OK] data_link_1D.json: 300 candles [OK]
+  [FAIL] data_btc_1m.json: 0 klines [NO_DATA]
+  [FAIL] data_btc_5m.json: 0 klines [NO_DATA]
+  [FAIL] data_btc_15m.json: 0 klines [NO_DATA]
+  [FAIL] data_btc_30m.json: 0 klines [NO_DATA]
+  [FAIL] data_btc_1H.json: 0 klines [NO_DATA]
+  [FAIL] data_btc_4H.json: 0 klines [NO_DATA]
+  [FAIL] data_btc_1D.json: 0 klines [NO_DATA]
+  [FAIL] data_eth_1m.json: 0 klines [NO_DATA]
+  [FAIL] data_eth_5m.json: 0 klines [NO_DATA]
+  [FAIL] data_eth_15m.json: 0 klines [NO_DATA]
+  [FAIL] data_eth_30m.json: 0 klines [NO_DATA]
+  [FAIL] data_eth_1H.json: 0 klines [NO_DATA]
+  [FAIL] data_eth_4H.json: 0 klines [NO_DATA]
+  [FAIL] data_eth_1D.json: 0 klines [NO_DATA]
+  [FAIL] data_sol_1m.json: 0 klines [NO_DATA]
+  [FAIL] data_sol_5m.json: 0 klines [NO_DATA]
+  [FAIL] data_sol_15m.json: 0 klines [NO_DATA]
+  [FAIL] data_sol_30m.json: 0 klines [NO_DATA]
+  [FAIL] data_sol_1H.json: 0 klines [NO_DATA]
+  [FAIL] data_sol_4H.json: 0 klines [NO_DATA]
+  [FAIL] data_sol_1D.json: 0 klines [NO_DATA]
+  [FAIL] data_doge_1m.json: 0 klines [NO_DATA]
+  [FAIL] data_doge_5m.json: 0 klines [NO_DATA]
+  [FAIL] data_doge_15m.json: 0 klines [NO_DATA]
+  [FAIL] data_doge_30m.json: 0 klines [NO_DATA]
+  [FAIL] data_doge_1H.json: 0 klines [NO_DATA]
+  [FAIL] data_doge_4H.json: 0 klines [NO_DATA]
+  [FAIL] data_doge_1D.json: 0 klines [NO_DATA]
+  [FAIL] data_link_1m.json: 0 klines [NO_DATA]
+  [FAIL] data_link_5m.json: 0 klines [NO_DATA]
+  [FAIL] data_link_15m.json: 0 klines [NO_DATA]
+  [FAIL] data_link_30m.json: 0 klines [NO_DATA]
+  [FAIL] data_link_1H.json: 0 klines [NO_DATA]
+  [FAIL] data_link_4H.json: 0 klines [NO_DATA]
+  [FAIL] data_link_1D.json: 0 klines [NO_DATA]
 
-Total: 35/35 files, 10500 candles
+Total: 0/35 files, 0 klines
