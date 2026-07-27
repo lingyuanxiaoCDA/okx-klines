@@ -1,9 +1,7 @@
 name: Fetch OKX K-line Data
 
 on:
-  # Manual trigger
   workflow_dispatch:
-  # Auto-run every 6 hours
   schedule:
     - cron: '0 */6 * * *'
 
@@ -40,6 +38,7 @@ jobs:
           fi
       
       - name: Upload data artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: klines-data
