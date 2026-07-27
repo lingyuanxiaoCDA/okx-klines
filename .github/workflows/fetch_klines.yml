@@ -23,13 +23,17 @@ jobs:
           python-version: '3.11'
       
       - name: Fetch K-line data from OKX
-        run: python fetch_klines.py
+        run: |
+          echo "=== Starting fetch ==="
+          python -u fetch_klines.py 2>&1 | tee fetch_log.txt
+          echo "=== Fetch complete ==="
       
       - name: Commit and push data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/
+          git add fetch_log.txt
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
@@ -42,5 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: klines-data
-          path: data/
+          path: |
+            data/
+            fetch_log.txt
           retention-days: 90

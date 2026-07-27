@@ -36,6 +36,7 @@ def fetch_page(symbol: str, bar: str, limit: int = 300, before: str = None) -> l
     url = f"{OKX_API}?instId={symbol}&bar={bar}&limit={limit}"
     if before:
         url += f"&before={before}"
+    print(f"    DEBUG: GET {url[:120]}")
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "Accept": "application/json",
@@ -44,7 +45,9 @@ def fetch_page(symbol: str, bar: str, limit: int = 300, before: str = None) -> l
         data = json.loads(resp.read().decode("utf-8"))
     if data.get("code") != "0":
         raise RuntimeError(f"OKX API error: {data.get('msg', 'unknown')}")
-    return data.get("data", [])
+    result = data.get("data", [])
+    print(f"    DEBUG: got {len(result)} candles, code={data.get('code')}")
+    return result
 
 
 def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
