@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
 OKX K-line data fetcher - GitHub Actions version
-Uses Bybit v5 API (accessible globally, no API key needed for klines) to fetch
-historical K-line data, then saves in OKX-compatible format.
+Uses OKX /market/candles endpoint with proper before pagination.
 """
 
 import json
@@ -12,139 +11,164 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-# Bybit v5 API (accessible from GitHub Actions, no API key for public endpoints)
-BYBIT_API = "https://api.bybit.com/v5/market/kline"
+# OKX candles API - supports before/after pagination
+OKX_API = "https://www.okx.com/api/v5/market/candles"
 
-# Symbol mapping: OKX -> Bybit
-SYMBOL_MAP = {
-    "BTC-USDT-SWAP": "BTCUSDT",
-    "ETH-USDT-SWAP": "ETHUSDT",
-    "SOL-USDT-SWAP": "SOLUSDT",
-    "DOGE-USDT-SWAP": "DOGEUSDT",
-    "LINK-USDT-SWAP": "LINKUSDT",
-}
+# Symbol list
+SYMBOLS = ["BTC-USDT-SWAP", "ETH-USDT-SWAP", "SOL-USDT-SWAP", "DOGE-USDT-SWAP", "LINK-USDT-SWAP"]
 
-# Period mapping: (Bybit interval, file tag, max candles)
-# Bybit intervals: 1,3,5,15,30,60,120,240,360,720,D,W,M
+# Period mapping: (OKX bar param, file tag, max candles, interval_ms)
 PERIODS = [
-    ("1",   "1m",    60000),   # ~41.7 days
-    ("5",   "5m",    60000),   # ~208 days
-    ("15",  "15m",   30000),   # ~312 days
-    ("30",  "30m",   30000),   # ~625 days
-    ("60",  "1H",    30000),   # ~1250 days
-    ("240", "4H",    10000),   # ~1666 days
-    ("D",   "1D",    3000),    # ~8.2 years
+    ("1m",  "1m",  60000, 60_000),
+    ("5m",  "5m",  60000, 300_000),
+    ("15m", "15m", 30000, 900_000),
+    ("30m", "30m", 30000, 1_800_000),
+    ("1H",  "1H",  30000, 3_600_000),
+    ("4H",  "4H",  10000, 14_400_000),
+    ("1D",  "1D",  3000,  86_400_000),
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
-def fetch_bybit_klines(symbol: str, interval: str, start_ts: int, category: str = "linear") -> list:
-    """Fetch klines from Bybit v5 API. Returns list of [ts, open, high, low, close, vol, ...].
+def fetch_page(symbol: str, bar: str, before: str = None) -> list:
+    """Fetch a page of candles from OKX /market/candles.
     
-    Bybit kline format: [start_time(ms), open, high, low, close, volume, turnover]
-    Returns up to 1000 klines per request.
+    The 'before' parameter: pagination of records to return records earlier than 
+    the requested ts (i.e., older records). Pass the oldest ts from previous batch.
+    
+    OKX /market/candles returns up to 300 candles, newest first.
     """
-    url = f"{BYBIT_API}?category={category}&symbol={symbol}&interval={interval}&start={start_ts}&limit=1000"
+    url = f"{OKX_API}?instId={symbol}&bar={bar}&limit=300"
+    if before:
+        url += f"&before={before}"
+    
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "Accept": "application/json",
     })
+    
     with urllib.request.urlopen(req, timeout=30) as resp:
         data = json.loads(resp.read().decode("utf-8"))
     
-    if data.get("retCode") != 0:
-        raise RuntimeError(f"Bybit API error: {data.get('retMsg', 'unknown')}")
+    if data.get("code") != "0":
+        raise RuntimeError(f"OKX API error: {data.get('msg', 'unknown')}")
     
-    result = data.get("result", {})
-    return result.get("list", [])
+    return data.get("data", [])
 
 
-def fetch_all_klines(bybit_symbol: str, interval: str, max_count: int) -> list:
-    """Fetch large amounts of historical klines from Bybit using pagination."""
-    all_klines = []
-    batch_size = 1000  # Bybit max 1000 per request
+def fetch_all_candles(symbol: str, bar: str, max_count: int, interval_ms: int) -> list:
+    """Fetch historical candles using before pagination.
     
-    # Calculate interval in milliseconds
-    interval_ms = {
-        "1": 60_000, "5": 300_000, "15": 900_000, "30": 1_800_000,
-        "60": 3_600_000, "240": 14_400_000, "D": 86_400_000,
-    }[interval]
+    OKX /market/candles returns newest first (descending ts).
+    Use 'before' = oldest ts from previous batch to get older data.
+    """
+    all_candles = []
+    seen_ts = set()
     
-    # Start from far enough back to get max_count klines
-    now_ms = int(time.time() * 1000)
-    start_ts = now_ms - (max_count * interval_ms)
+    # First request: latest candles
+    batch = fetch_page(symbol, bar)
+    if not batch:
+        print(f"  No data returned")
+        return []
     
-    while len(all_klines) < max_count:
+    for c in batch:
+        ts = c[0]
+        if ts not in seen_ts:
+            seen_ts.add(ts)
+            all_candles.append(c)
+    
+    print(f"  Initial: {len(all_candles)} candles (ts range: {batch[-1][0]} ~ {batch[0][0]})")
+    
+    # Paginate backwards
+    empty_count = 0
+    while len(all_candles) < max_count and empty_count < 3:
+        # Use the OLDEST timestamp from all collected as 'before'
+        oldest_ts = str(min(int(c[0]) for c in all_candles))
+        
         try:
-            batch = fetch_bybit_klines(bybit_symbol, interval, start_ts)
+            batch = fetch_page(symbol, bar, before=oldest_ts)
         except Exception as e:
-            print(f"  Warning: {e}, retrying in 3s...")
+            print(f"  Warning: {e}, retry in 3s...")
             time.sleep(3)
-            try:
-                batch = fetch_bybit_klines(bybit_symbol, interval, start_ts)
-            except Exception as e2:
-                print(f"  Error: {e2}, stopping")
-                break
+            empty_count += 1
+            continue
         
         if not batch:
-            print(f"  No more data (got {len(all_klines)} klines)")
+            print(f"  Empty batch, no more data ({len(all_candles)} total)")
             break
         
-        # Bybit returns descending order (newest first), prepend batch
-        # Deduplicate by timestamp
-        seen = {k[0] for k in all_klines}
-        new_klines = [k for k in batch if k[0] not in seen]
+        # Count new candles
+        new_count = 0
+        oldest_in_batch = batch[-1][0]
+        newest_in_batch = batch[0][0]
         
-        if not new_klines:
-            print(f"  No new data, stopping")
-            break
+        for c in batch:
+            ts = c[0]
+            if ts not in seen_ts:
+                seen_ts.add(ts)
+                all_candles.append(c)
+                new_count += 1
         
-        all_klines.extend(new_klines)
+        if new_count == 0:
+            print(f"  All duplicates (batch ts: {oldest_in_batch} ~ {newest_in_batch}), trying older...")
+            empty_count += 1
+            # Try going further back by subtracting interval
+            oldest_ts = str(int(oldest_ts) - interval_ms * 300)
+            try:
+                batch = fetch_page(symbol, bar, before=oldest_ts)
+                new_count = 0
+                for c in batch:
+                    ts = c[0]
+                    if ts not in seen_ts:
+                        seen_ts.add(ts)
+                        all_candles.append(c)
+                        new_count += 1
+                if new_count == 0:
+                    print(f"  Still duplicates, giving up")
+                    break
+                print(f"  Recovered: +{new_count} candles")
+                empty_count = 0
+            except Exception as e:
+                print(f"  Fallback failed: {e}")
+                break
+        else:
+            empty_count = 0
         
-        # Get the newest timestamp from this batch to advance start_ts
-        # Bybit returns newest first, so batch[0] is newest
-        newest_ts = int(batch[0][0])
-        start_ts = newest_ts + interval_ms  # Move past the newest kline
+        if len(all_candles) % 3000 < 300:
+            print(f"  Progress: {len(all_candles)}/{max_count}")
         
-        if len(batch) < batch_size:
-            print(f"  Partial batch ({len(batch)} < {batch_size})")
-            # Don't break - Bybit may return less than 1000 for older data
-        
-        print(f"  Progress: {len(all_klines)}/{max_count} klines ({bybit_symbol} {interval})")
-        time.sleep(0.2)  # Rate limit
+        time.sleep(0.15)
     
-    # Sort ascending by timestamp and trim
-    all_klines.sort(key=lambda x: int(x[0]))
-    return all_klines[:max_count]
+    # Sort ascending
+    all_candles.sort(key=lambda x: int(x[0]))
+    return all_candles[:max_count]
 
 
-def save_klines(okx_symbol: str, period_tag: str, klines: list):
-    """Save kline data as JSON file in OKX-like format."""
-    coin = okx_symbol.split("-")[0].lower()
+def save_candles(symbol: str, period_tag: str, candles: list):
+    """Save K-line data as JSON file."""
+    coin = symbol.split("-")[0].lower()
     filename = f"data_{coin}_{period_tag}.json"
     filepath = os.path.join(OUTPUT_DIR, filename)
     
-    # Convert Bybit format to OKX-like format
-    # Bybit: [startTime, open, high, low, close, volume, turnover]
     formatted = []
-    for k in klines:
-        ts = int(k[0])
+    for c in candles:
+        ts = int(c[0])
         formatted.append({
             "ts": ts,
             "time": datetime.fromtimestamp(ts / 1000, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-            "open": float(k[1]),
-            "high": float(k[2]),
-            "low": float(k[3]),
-            "close": float(k[4]),
-            "vol": float(k[5]),
-            "volCcy": float(k[6]) if len(k) > 6 else 0.0,
-            "confirm": "1",
+            "open": float(c[1]),
+            "high": float(c[2]),
+            "low": float(c[3]),
+            "close": float(c[4]),
+            "vol": float(c[5]),
+            "volCcy": float(c[6]),
+            "confirm": c[8] if len(c) > 8 else "1",
         })
     
     output = {
-        "symbol": okx_symbol,
-        "source": "bybit_v5",
+        "symbol": symbol,
+        "source": "okx_market_candles",
         "period": period_tag,
         "count": len(formatted),
         "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
@@ -161,38 +185,34 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
     results = []
-    for okx_symbol, bybit_symbol in SYMBOL_MAP.items():
-        for interval, tag, max_count in PERIODS:
-            print(f"\nFetching {okx_symbol} ({bybit_symbol}) {tag} (target: {max_count} klines)...")
+    for symbol in SYMBOLS:
+        for bar, tag, max_count, interval_ms in PERIODS:
+            print(f"\nFetching {symbol} {tag} (target: {max_count})...")
             try:
-                klines = fetch_all_klines(bybit_symbol, interval, max_count)
-                if klines:
-                    filename, count = save_klines(okx_symbol, tag, klines)
-                    print(f"  OK: {filename}: {count} klines")
+                candles = fetch_all_candles(symbol, bar, max_count, interval_ms)
+                if candles:
+                    filename, count = save_candles(symbol, tag, candles)
+                    print(f"  OK: {filename}: {count} candles")
                     results.append((filename, count, "OK"))
                 else:
                     print(f"  FAIL: no data")
-                    results.append((f"data_{okx_symbol.split('-')[0].lower()}_{tag}.json", 0, "NO_DATA"))
+                    results.append((f"data_{symbol.split('-')[0].lower()}_{tag}.json", 0, "NO_DATA"))
             except Exception as e:
                 print(f"  ERROR: {e}")
-                results.append((f"data_{okx_symbol.split('-')[0].lower()}_{tag}.json", 0, f"ERROR: {e}"))
+                results.append((f"data_{symbol.split('-')[0].lower()}_{tag}.json", 0, f"ERROR: {e}"))
     
-    # Print summary
     print("\n" + "=" * 60)
     print("Data Fetch Summary")
     print("=" * 60)
     total_ok = 0
-    total_klines = 0
+    total_candles = 0
     for filename, count, status in results:
         icon = "OK" if status == "OK" else "FAIL"
-        print(f"  [{icon}] {filename}: {count} klines [{status}]")
+        print(f"  [{icon}] {filename}: {count} [{status}]")
         if status == "OK":
             total_ok += 1
-            total_klines += count
-    print(f"\nTotal: {total_ok}/{len(results)} files, {total_klines} klines")
-    
-    if total_ok == 0:
-        exit(1)
+            total_candles += count
+    print(f"\nTotal: {total_ok}/{len(results)} files, {total_candles} candles")
 
 
 if __name__ == "__main__":
