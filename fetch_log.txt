@@ -3,8 +3,8 @@ Fetching BTC-USDT-SWAP 1m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1m&limit=300&before=1785152400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1m&limit=300&before=1785152639999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_btc_1m.json: 300 candles
 
@@ -12,8 +12,8 @@ Fetching BTC-USDT-SWAP 5m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=5m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=5m&limit=300&before=1785080400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=5m&limit=300&before=1785080699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_btc_5m.json: 300 candles
 
@@ -21,8 +21,8 @@ Fetching BTC-USDT-SWAP 15m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=15m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=15m&limit=300&before=1784900700000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=15m&limit=300&before=1784900699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_btc_15m.json: 300 candles
 
@@ -30,8 +30,8 @@ Fetching BTC-USDT-SWAP 30m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=30m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=30m&limit=300&before=1784631600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=30m&limit=300&before=1784631599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_btc_30m.json: 300 candles
 
@@ -39,8 +39,8 @@ Fetching BTC-USDT-SWAP 1H (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1H&limit=300&before=1784091600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1H&limit=300&before=1784091599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_btc_1H.json: 300 candles
 
@@ -48,8 +48,8 @@ Fetching BTC-USDT-SWAP 4H (target: 10000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=4H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=4H&limit=300&before=1780862400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=4H&limit=300&before=1780862399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_btc_4H.json: 300 candles
 
@@ -57,8 +57,8 @@ Fetching BTC-USDT-SWAP 1D (target: 3000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1D&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1D&limit=300&before=1759334400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1D&limit=300&before=1759334399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_btc_1D.json: 300 candles
 
@@ -66,8 +66,8 @@ Fetching ETH-USDT-SWAP 1m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1m&limit=300&before=1785152400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1m&limit=300&before=1785152639999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_eth_1m.json: 300 candles
 
@@ -75,8 +75,8 @@ Fetching ETH-USDT-SWAP 5m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=5m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=5m&limit=300&before=1785080400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=5m&limit=300&before=1785080699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_eth_5m.json: 300 candles
 
@@ -84,8 +84,8 @@ Fetching ETH-USDT-SWAP 15m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=15m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=15m&limit=300&before=1784900700000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=15m&limit=300&before=1784900699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_eth_15m.json: 300 candles
 
@@ -93,8 +93,8 @@ Fetching ETH-USDT-SWAP 30m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=30m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=30m&limit=300&before=1784631600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=30m&limit=300&before=1784631599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_eth_30m.json: 300 candles
 
@@ -102,8 +102,8 @@ Fetching ETH-USDT-SWAP 1H (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1H&limit=300&before=1784091600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1H&limit=300&before=1784091599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_eth_1H.json: 300 candles
 
@@ -111,8 +111,8 @@ Fetching ETH-USDT-SWAP 4H (target: 10000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=4H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=4H&limit=300&before=1780862400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=4H&limit=300&before=1780862399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_eth_4H.json: 300 candles
 
@@ -120,8 +120,8 @@ Fetching ETH-USDT-SWAP 1D (target: 3000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1D&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1D&limit=300&before=1759334400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=ETH-USDT-SWAP&bar=1D&limit=300&before=1759334399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_eth_1D.json: 300 candles
 
@@ -129,8 +129,8 @@ Fetching SOL-USDT-SWAP 1m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1m&limit=300&before=1785152400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1m&limit=300&before=1785152639999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_sol_1m.json: 300 candles
 
@@ -138,8 +138,8 @@ Fetching SOL-USDT-SWAP 5m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=5m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=5m&limit=300&before=1785080400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=5m&limit=300&before=1785080699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_sol_5m.json: 300 candles
 
@@ -147,8 +147,8 @@ Fetching SOL-USDT-SWAP 15m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=15m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=15m&limit=300&before=1784900700000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=15m&limit=300&before=1784900699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_sol_15m.json: 300 candles
 
@@ -156,8 +156,8 @@ Fetching SOL-USDT-SWAP 30m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=30m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=30m&limit=300&before=1784631600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=30m&limit=300&before=1784631599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_sol_30m.json: 300 candles
 
@@ -165,8 +165,8 @@ Fetching SOL-USDT-SWAP 1H (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1H&limit=300&before=1784091600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1H&limit=300&before=1784091599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_sol_1H.json: 300 candles
 
@@ -174,8 +174,8 @@ Fetching SOL-USDT-SWAP 4H (target: 10000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=4H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=4H&limit=300&before=1780862400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=4H&limit=300&before=1780862399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_sol_4H.json: 300 candles
 
@@ -183,8 +183,8 @@ Fetching SOL-USDT-SWAP 1D (target: 3000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1D&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1D&limit=300&before=1759334400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=SOL-USDT-SWAP&bar=1D&limit=300&before=1759334399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_sol_1D.json: 300 candles
 
@@ -192,8 +192,8 @@ Fetching DOGE-USDT-SWAP 1m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1m&limit=300&before=1785152400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1m&limit=300&before=1785152639999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_doge_1m.json: 300 candles
 
@@ -201,8 +201,8 @@ Fetching DOGE-USDT-SWAP 5m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=5m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=5m&limit=300&before=1785080400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=5m&limit=300&before=1785080699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_doge_5m.json: 300 candles
 
@@ -210,8 +210,8 @@ Fetching DOGE-USDT-SWAP 15m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=15m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=15m&limit=300&before=1784900700000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=15m&limit=300&before=1784900699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_doge_15m.json: 300 candles
 
@@ -219,8 +219,8 @@ Fetching DOGE-USDT-SWAP 30m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=30m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=30m&limit=300&before=1784631600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=30m&limit=300&before=1784631599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_doge_30m.json: 300 candles
 
@@ -228,8 +228,8 @@ Fetching DOGE-USDT-SWAP 1H (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1H&limit=300&before=1784091600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1H&limit=300&before=1784091599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_doge_1H.json: 300 candles
 
@@ -237,8 +237,8 @@ Fetching DOGE-USDT-SWAP 4H (target: 10000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=4H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=4H&limit=300&before=1780862400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=4H&limit=300&before=1780862399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_doge_4H.json: 300 candles
 
@@ -246,8 +246,8 @@ Fetching DOGE-USDT-SWAP 1D (target: 3000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1D&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1D&limit=300&before=1759334400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=DOGE-USDT-SWAP&bar=1D&limit=300&before=1759334399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_doge_1D.json: 300 candles
 
@@ -255,8 +255,8 @@ Fetching LINK-USDT-SWAP 1m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1m&limit=300&before=1785152400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1m&limit=300&before=1785152639999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_link_1m.json: 300 candles
 
@@ -264,8 +264,8 @@ Fetching LINK-USDT-SWAP 5m (target: 60000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=5m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=5m&limit=300&before=1785080400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=5m&limit=300&before=1785080699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_link_5m.json: 300 candles
 
@@ -273,8 +273,8 @@ Fetching LINK-USDT-SWAP 15m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=15m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=15m&limit=300&before=1784900700000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=15m&limit=300&before=1784900699999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_link_15m.json: 300 candles
 
@@ -282,8 +282,8 @@ Fetching LINK-USDT-SWAP 30m (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=30m&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=30m&limit=300&before=1784631600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=30m&limit=300&before=1784631599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_link_30m.json: 300 candles
 
@@ -291,8 +291,8 @@ Fetching LINK-USDT-SWAP 1H (target: 30000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1H&limit=300&before=1784091600000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1H&limit=300&before=1784091599999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_link_1H.json: 300 candles
 
@@ -300,8 +300,8 @@ Fetching LINK-USDT-SWAP 4H (target: 10000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=4H&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=4H&limit=300&before=1780862400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=4H&limit=300&before=1780862399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_link_4H.json: 300 candles
 
@@ -309,8 +309,8 @@ Fetching LINK-USDT-SWAP 1D (target: 3000 candles)...
     DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1D&limit=300
     DEBUG: got 300 candles, code=0
   Initial batch: 300 candles
-    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1D&limit=300&before=1759334400000
-    DEBUG: got 299 candles, code=0
+    DEBUG: GET https://www.okx.com/api/v5/market/history-candles?instId=LINK-USDT-SWAP&bar=1D&limit=300&before=1759334399999
+    DEBUG: got 300 candles, code=0
   No new data (all duplicates), stopping
   OK: data_link_1D.json: 300 candles
 
