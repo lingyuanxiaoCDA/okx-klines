@@ -11,8 +11,9 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-# OKX public API
-OKX_API = "https://www.okx.com/api/v5/market/candles"
+# OKX public APIs
+OKX_API = "https://www.okx.com/api/v5/market/candles"          # latest 300 candles
+OKX_HISTORY_API = "https://www.okx.com/api/v5/market/history-candles"  # historical data with pagination
 
 # Symbol list
 SYMBOLS = ["BTC-USDT-SWAP", "ETH-USDT-SWAP", "SOL-USDT-SWAP", "DOGE-USDT-SWAP", "LINK-USDT-SWAP"]
@@ -31,9 +32,12 @@ PERIODS = [
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
-def fetch_candles(symbol: str, bar: str, limit: int = 300) -> list:
+def fetch_candles(symbol: str, bar: str, limit: int = 300, before: str = None) -> list:
     """Fetch a single batch of K-line data from OKX (max 300 candles)."""
-    url = f"{OKX_API}?instId={symbol}&bar={bar}&limit={limit}"
+    api = OKX_HISTORY_API if before else OKX_API
+    url = f"{api}?instId={symbol}&bar={bar}&limit={limit}"
+    if before:
+        url += f"&before={before}"
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "Accept": "application/json",
@@ -63,26 +67,13 @@ def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
 
     # Use oldest K-line timestamp as 'before' parameter to continue backwards
     while len(all_candles) < max_count:
-        oldest_ts = min(c[0] for c in batch)
-        url = f"{OKX_API}?instId={symbol}&bar={bar}&limit=300&before={oldest_ts}"
-        req = urllib.request.Request(url, headers={
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "Accept": "application/json",
-        })
+        oldest_ts = min(c[0] for c in all_candles)
         try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-        except urllib.error.URLError as e:
-            print(f"  Warning: network error: {e}, retrying in 3s...")
+            batch = fetch_candles(symbol, bar, 300, before=oldest_ts)
+        except Exception as e:
+            print(f"  Warning: error: {e}, retrying in 3s...")
             time.sleep(3)
             continue
-
-        if data.get("code") != "0":
-            print(f"  Warning: API error: {data.get('msg')}, retrying in 3s...")
-            time.sleep(3)
-            continue
-
-        batch = data.get("data", [])
         if not batch:
             break  # No more data
 
