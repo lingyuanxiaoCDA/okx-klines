@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 OKX K-line data fetcher - GitHub Actions version
-Fetches multi-symbol multi-period K-line data from OKX public API, saves as JSON.
+Uses Binance API (accessible globally) to fetch historical K-line data,
+then converts to OKX format for compatibility.
 """
 
 import json
@@ -11,175 +12,185 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-# OKX history-candles API supports pagination via before/after params
-OKX_API = "https://www.okx.com/api/v5/market/history-candles"
+# Binance Futures API (accessible from GitHub Actions, no API key needed for klines)
+BINANCE_API = "https://fapi.binance.com/fapi/v1/klines"
 
-# Symbol list
-SYMBOLS = ["BTC-USDT-SWAP", "ETH-USDT-SWAP", "SOL-USDT-SWAP", "DOGE-USDT-SWAP", "LINK-USDT-SWAP"]
+# Symbol mapping: OKX -> Binance
+SYMBOL_MAP = {
+    "BTC-USDT-SWAP": "BTCUSDT",
+    "ETH-USDT-SWAP": "ETHUSDT",
+    "SOL-USDT-SWAP": "SOLUSDT",
+    "DOGE-USDT-SWAP": "DOGEUSDT",
+    "LINK-USDT-SWAP": "LINKUSDT",
+}
 
-# Period mapping: (OKX bar param, file tag, max candles)
+# Period mapping: (Binance interval, OKX symbol, file tag, max candles)
 PERIODS = [
-    ("1m",    "1m",    60000),   # ~41.7 days
-    ("5m",    "5m",    60000),   # ~208 days
-    ("15m",   "15m",   30000),   # ~312 days
-    ("30m",   "30m",   30000),   # ~625 days
-    ("1H",    "1H",    30000),   # ~1250 days
-    ("4H",    "4H",    10000),   # ~1666 days
-    ("1D",    "1D",    3000),    # ~8.2 years
+    ("1m",   "1m",    "1m",    60000),   # ~41.7 days
+    ("5m",   "5m",    "5m",    60000),   # ~208 days
+    ("15m",  "15m",   "15m",   30000),   # ~312 days
+    ("30m",  "30m",   "30m",   30000),   # ~625 days
+    ("1h",   "1H",    "1H",    30000),   # ~1250 days
+    ("4h",   "4H",    "4H",    10000),   # ~1666 days
+    ("1d",   "1D",    "1D",    3000),    # ~8.2 years
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
-def fetch_page(symbol: str, bar: str, limit: int = 300, before: str = None) -> list:
-    """Fetch a single page of K-line data from OKX history-candles API."""
-    url = f"{OKX_API}?instId={symbol}&bar={bar}&limit={limit}"
-    if before:
-        url += f"&before={before}"
-    print(f"    DEBUG: GET {url[:120]}")
+def fetch_binance_klines(symbol: str, interval: str, start_time: int, end_time: int, limit: int = 1500) -> list:
+    """Fetch klines from Binance Futures API. Returns list of raw kline arrays.
+    
+    Binance kline format: [openTime, open, high, low, close, volume, closeTime, 
+                           quoteAssetVolume, numberOfTrades, takerBuyBaseVolume, 
+                           takerBuyQuoteVolume, ignore]
+    """
+    url = f"{BINANCE_API}?symbol={symbol}&interval={interval}&startTime={start_time}&endTime={end_time}&limit={limit}"
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "Accept": "application/json",
     })
     with urllib.request.urlopen(req, timeout=30) as resp:
         data = json.loads(resp.read().decode("utf-8"))
-    if data.get("code") != "0":
-        raise RuntimeError(f"OKX API error: {data.get('msg', 'unknown')}")
-    result = data.get("data", [])
-    print(f"    DEBUG: got {len(result)} candles, code={data.get('code')}")
-    return result
+    return data
 
 
-def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
-    """Paginate to fetch large amounts of K-line data using before parameter."""
-    all_candles = []
-    seen_ts = set()
-
-    # First request: latest candles (no before param)
-    batch = fetch_page(symbol, bar, 300)
-    if not batch:
-        print(f"  No data returned for {symbol} {bar}")
-        return []
-
-    for candle in batch:
-        ts = candle[0]
-        if ts not in seen_ts:
-            seen_ts.add(ts)
-            all_candles.append(candle)
-
-    print(f"  Initial batch: {len(all_candles)} candles")
-
-    # Paginate backwards using the oldest timestamp
-    # OKX before param: return candles with ts < before
-    # We need to subtract 1ms from oldest to avoid getting the same candle back
-    retry_count = 0
-    while len(all_candles) < max_count and retry_count < 5:
-        oldest_ts = str(min(int(c[0]) for c in all_candles) - 1)
-
+def fetch_all_klines(binance_symbol: str, interval: str, max_count: int) -> list:
+    """Fetch large amounts of historical klines from Binance using pagination."""
+    all_klines = []
+    
+    # Binance max 1500 per request for futures
+    batch_size = 1500
+    
+    # Calculate interval in milliseconds
+    interval_ms = {
+        "1m": 60_000, "5m": 300_000, "15m": 900_000, "30m": 1_800_000,
+        "1h": 3_600_000, "4h": 14_400_000, "1d": 86_400_000,
+    }[interval]
+    
+    # Start from the most recent and go backwards
+    end_time = int(time.time() * 1000)
+    
+    while len(all_klines) < max_count:
+        # Calculate start time: go back batch_size * interval_ms
+        start_time = end_time - (batch_size * interval_ms)
+        
         try:
-            batch = fetch_page(symbol, bar, 300, before=oldest_ts)
-            retry_count = 0
+            batch = fetch_binance_klines(binance_symbol, interval, start_time, end_time, batch_size)
         except Exception as e:
-            print(f"  Warning: {e}, retry {retry_count + 1}/5...")
-            retry_count += 1
+            print(f"  Warning: {e}, retrying in 3s...")
             time.sleep(3)
-            continue
-
+            # Retry once
+            try:
+                batch = fetch_binance_klines(binance_symbol, interval, start_time, end_time, batch_size)
+            except Exception as e2:
+                print(f"  Error: {e2}, stopping")
+                break
+        
         if not batch:
-            print(f"  No more data (got {len(all_candles)} candles)")
+            print(f"  No more data (got {len(all_klines)} klines)")
             break
-
-        new_count = 0
-        for candle in batch:
-            ts = candle[0]
-            if ts not in seen_ts:
-                seen_ts.add(ts)
-                all_candles.append(candle)
-                new_count += 1
-
-        if new_count == 0:
-            print(f"  No new data (all duplicates), stopping")
+        
+        # Binance returns ascending order (oldest first)
+        # Prepend to all_klines
+        all_klines = batch + all_klines
+        
+        # Deduplicate by openTime
+        seen = set()
+        unique = []
+        for k in all_klines:
+            if k[0] not in seen:
+                seen.add(k[0])
+                unique.append(k)
+        all_klines = unique
+        
+        # Move end_time to before the oldest kline in this batch
+        oldest_ts = batch[0][0]
+        end_time = oldest_ts - 1
+        
+        if len(batch) < batch_size:
+            # Less than full batch means no more historical data
+            print(f"  Partial batch ({len(batch)} < {batch_size}), no more data")
             break
-
-        if len(all_candles) % 3000 == 0 or len(all_candles) >= max_count:
-            print(f"  Progress: {len(all_candles)}/{max_count} candles ({symbol} {bar})")
-
-        time.sleep(0.15)  # Rate limit: max 20 req/2s for public endpoints
-
-    # Sort by timestamp ascending (oldest first)
-    all_candles.sort(key=lambda x: int(x[0]))
-    return all_candles[:max_count]
+        
+        print(f"  Progress: {len(all_klines)}/{max_count} klines ({binance_symbol} {interval})")
+        time.sleep(0.2)  # Rate limit
+    
+    # Sort ascending and trim
+    all_klines.sort(key=lambda x: x[0])
+    return all_klines[:max_count]
 
 
-def save_candles(symbol: str, period_tag: str, candles: list):
-    """Save K-line data as JSON file."""
-    coin = symbol.split("-")[0].lower()
+def save_klines(okx_symbol: str, period_tag: str, klines: list):
+    """Save kline data as JSON file in OKX-like format."""
+    coin = okx_symbol.split("-")[0].lower()
     filename = f"data_{coin}_{period_tag}.json"
     filepath = os.path.join(OUTPUT_DIR, filename)
-
-    # OKX K-line format: [ts, open, high, low, close, vol, volCcy, volCcyQuote, confirm]
+    
+    # Convert Binance format to OKX-like format
     formatted = []
-    for c in candles:
+    for k in klines:
         formatted.append({
-            "ts": int(c[0]),
-            "time": datetime.fromtimestamp(int(c[0]) / 1000, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-            "open": float(c[1]),
-            "high": float(c[2]),
-            "low": float(c[3]),
-            "close": float(c[4]),
-            "vol": float(c[5]),
-            "volCcy": float(c[6]),
-            "confirm": c[8] if len(c) > 8 else "1",
+            "ts": int(k[0]),
+            "time": datetime.fromtimestamp(int(k[0]) / 1000, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+            "open": float(k[1]),
+            "high": float(k[2]),
+            "low": float(k[3]),
+            "close": float(k[4]),
+            "vol": float(k[5]),
+            "volCcy": float(k[7]),  # quote volume
+            "confirm": "1",
         })
-
+    
     output = {
-        "symbol": symbol,
+        "symbol": okx_symbol,
+        "source": "binance_futures",
         "period": period_tag,
         "count": len(formatted),
         "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
         "data": formatted,
     }
-
+    
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, separators=(",", ":"))
-
+    
     return filename, len(formatted)
 
 
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-
+    
     results = []
-    for symbol in SYMBOLS:
-        for bar, tag, max_count in PERIODS:
-            print(f"\nFetching {symbol} {tag} (target: {max_count} candles)...")
+    for okx_symbol, binance_symbol in SYMBOL_MAP.items():
+        for interval, okx_bar, tag, max_count in PERIODS:
+            print(f"\nFetching {okx_symbol} ({binance_symbol}) {tag} (target: {max_count} klines)...")
             try:
-                candles = fetch_all_candles(symbol, bar, max_count)
-                if candles:
-                    filename, count = save_candles(symbol, tag, candles)
-                    print(f"  OK: {filename}: {count} candles")
+                klines = fetch_all_klines(binance_symbol, interval, max_count)
+                if klines:
+                    filename, count = save_klines(okx_symbol, tag, klines)
+                    print(f"  OK: {filename}: {count} klines")
                     results.append((filename, count, "OK"))
                 else:
                     print(f"  FAIL: no data")
-                    results.append((f"data_{symbol.split('-')[0].lower()}_{tag}.json", 0, "NO_DATA"))
+                    results.append((f"data_{okx_symbol.split('-')[0].lower()}_{tag}.json", 0, "NO_DATA"))
             except Exception as e:
                 print(f"  ERROR: {e}")
-                results.append((f"data_{symbol.split('-')[0].lower()}_{tag}.json", 0, f"ERROR: {e}"))
-
+                results.append((f"data_{okx_symbol.split('-')[0].lower()}_{tag}.json", 0, f"ERROR: {e}"))
+    
     # Print summary
     print("\n" + "=" * 60)
     print("Data Fetch Summary")
     print("=" * 60)
     total_ok = 0
-    total_candles = 0
+    total_klines = 0
     for filename, count, status in results:
         icon = "OK" if status == "OK" else "FAIL"
-        print(f"  [{icon}] {filename}: {count} candles [{status}]")
+        print(f"  [{icon}] {filename}: {count} klines [{status}]")
         if status == "OK":
             total_ok += 1
-            total_candles += count
-    print(f"\nTotal: {total_ok}/{len(results)} files, {total_candles} candles")
-
+            total_klines += count
+    print(f"\nTotal: {total_ok}/{len(results)} files, {total_klines} klines")
+    
     if total_ok == 0:
         exit(1)
 
