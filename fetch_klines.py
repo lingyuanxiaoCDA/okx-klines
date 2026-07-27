@@ -11,9 +11,8 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-# OKX public APIs
-OKX_API = "https://www.okx.com/api/v5/market/candles"          # latest 300 candles
-OKX_HISTORY_API = "https://www.okx.com/api/v5/market/history-candles"  # historical data with pagination
+# OKX history-candles API supports pagination via before/after params
+OKX_API = "https://www.okx.com/api/v5/market/history-candles"
 
 # Symbol list
 SYMBOLS = ["BTC-USDT-SWAP", "ETH-USDT-SWAP", "SOL-USDT-SWAP", "DOGE-USDT-SWAP", "LINK-USDT-SWAP"]
@@ -32,10 +31,9 @@ PERIODS = [
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
-def fetch_candles(symbol: str, bar: str, limit: int = 300, before: str = None) -> list:
-    """Fetch a single batch of K-line data from OKX (max 300 candles)."""
-    api = OKX_HISTORY_API if before else OKX_API
-    url = f"{api}?instId={symbol}&bar={bar}&limit={limit}"
+def fetch_page(symbol: str, bar: str, limit: int = 300, before: str = None) -> list:
+    """Fetch a single page of K-line data from OKX history-candles API."""
+    url = f"{OKX_API}?instId={symbol}&bar={bar}&limit={limit}"
     if before:
         url += f"&before={before}"
     req = urllib.request.Request(url, headers={
@@ -50,13 +48,14 @@ def fetch_candles(symbol: str, bar: str, limit: int = 300, before: str = None) -
 
 
 def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
-    """Paginate to fetch large amounts of K-line data."""
+    """Paginate to fetch large amounts of K-line data using before parameter."""
     all_candles = []
     seen_ts = set()
 
-    # First request (from latest going backwards)
-    batch = fetch_candles(symbol, bar, 300)
+    # First request: latest candles (no before param)
+    batch = fetch_page(symbol, bar, 300)
     if not batch:
+        print(f"  No data returned for {symbol} {bar}")
         return []
 
     for candle in batch:
@@ -65,17 +64,27 @@ def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
             seen_ts.add(ts)
             all_candles.append(candle)
 
-    # Use oldest K-line timestamp as 'before' parameter to continue backwards
-    while len(all_candles) < max_count:
-        oldest_ts = min(c[0] for c in all_candles)
+    print(f"  Initial batch: {len(all_candles)} candles")
+
+    # Paginate backwards using the oldest timestamp
+    retry_count = 0
+    while len(all_candles) < max_count and retry_count < 5:
+        # OKX returns data sorted by ts descending (newest first)
+        # The last element is the oldest
+        oldest_ts = str(min(int(c[0]) for c in all_candles))
+
         try:
-            batch = fetch_candles(symbol, bar, 300, before=oldest_ts)
+            batch = fetch_page(symbol, bar, 300, before=oldest_ts)
+            retry_count = 0  # Reset on success
         except Exception as e:
-            print(f"  Warning: error: {e}, retrying in 3s...")
+            print(f"  Warning: {e}, retry {retry_count + 1}/5...")
+            retry_count += 1
             time.sleep(3)
             continue
+
         if not batch:
-            break  # No more data
+            print(f"  No more data (got {len(all_candles)} candles)")
+            break
 
         new_count = 0
         for candle in batch:
@@ -86,13 +95,16 @@ def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
                 new_count += 1
 
         if new_count == 0:
-            break  # No new data
+            print(f"  No new data (all duplicates), stopping")
+            break
 
-        print(f"  Fetched {len(all_candles)}/{max_count} candles ({symbol} {bar})")
-        time.sleep(0.2)  # Avoid rate limits
+        if len(all_candles) % 3000 == 0 or len(all_candles) >= max_count:
+            print(f"  Progress: {len(all_candles)}/{max_count} candles ({symbol} {bar})")
 
-    # Sort by timestamp ascending
-    all_candles.sort(key=lambda x: x[0])
+        time.sleep(0.15)  # Rate limit: max 20 req/2s for public endpoints
+
+    # Sort by timestamp ascending (oldest first)
+    all_candles.sort(key=lambda x: int(x[0]))
     return all_candles[:max_count]
 
 
@@ -103,7 +115,6 @@ def save_candles(symbol: str, period_tag: str, candles: list):
     filepath = os.path.join(OUTPUT_DIR, filename)
 
     # OKX K-line format: [ts, open, high, low, close, vol, volCcy, volCcyQuote, confirm]
-    # Convert to clean format
     formatted = []
     for c in candles:
         formatted.append({
@@ -157,14 +168,15 @@ def main():
     print("Data Fetch Summary")
     print("=" * 60)
     total_ok = 0
+    total_candles = 0
     for filename, count, status in results:
         icon = "OK" if status == "OK" else "FAIL"
         print(f"  [{icon}] {filename}: {count} candles [{status}]")
         if status == "OK":
             total_ok += 1
-    print(f"\nTotal: {total_ok}/{len(results)} files succeeded")
+            total_candles += count
+    print(f"\nTotal: {total_ok}/{len(results)} files, {total_candles} candles")
 
-    # Exit with error if nothing succeeded
     if total_ok == 0:
         exit(1)
 
