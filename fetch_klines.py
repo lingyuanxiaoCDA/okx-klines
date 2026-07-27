@@ -70,15 +70,15 @@ def fetch_all_candles(symbol: str, bar: str, max_count: int) -> list:
     print(f"  Initial batch: {len(all_candles)} candles")
 
     # Paginate backwards using the oldest timestamp
+    # OKX before param: return candles with ts < before
+    # We need to subtract 1ms from oldest to avoid getting the same candle back
     retry_count = 0
     while len(all_candles) < max_count and retry_count < 5:
-        # OKX returns data sorted by ts descending (newest first)
-        # The last element is the oldest
-        oldest_ts = str(min(int(c[0]) for c in all_candles))
+        oldest_ts = str(min(int(c[0]) for c in all_candles) - 1)
 
         try:
             batch = fetch_page(symbol, bar, 300, before=oldest_ts)
-            retry_count = 0  # Reset on success
+            retry_count = 0
         except Exception as e:
             print(f"  Warning: {e}, retry {retry_count + 1}/5...")
             retry_count += 1
